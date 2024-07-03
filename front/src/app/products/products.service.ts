@@ -16,11 +16,7 @@ export class ProductsService {
     getProducts(): Observable<Product[]> {
         if( ! ProductsService.productslist )
         {
-            this.http.get<any>('assets/products.json').subscribe(data => {
-                ProductsService.productslist = data.data;
-                
-                this.products$.next(ProductsService.productslist);
-            });
+            return this.http.get<any>('http://localhost:3000/products')
         }
         else
         {

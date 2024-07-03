@@ -3,7 +3,7 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../db');
 
 // Define a model for the 'products' table
-const Product = sequelize.define('Product', {
+const Product = sequelize.define('product', {
     code: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -32,14 +32,19 @@ const Product = sequelize.define('Product', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    category: {
-        type: DataTypes.STRING,
-        allowNull: true,
-    },
     rating: {
         type: DataTypes.FLOAT,
         allowNull: true,
     },
+    image: {
+        type: DataTypes.FLOAT,
+        allowNull: true,
+    },
+    createdAt: false,
+    updatedAt: false,
+},
+{
+  tableName: "product"
 });
 
 module.exports = Product;

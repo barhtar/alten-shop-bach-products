@@ -4,15 +4,20 @@
   "description": "The backend for alten shop",
   "main": "app.js",
   "scripts": {
-    "start": "node ./app.js",
+    "seed": "npx sequelize-cli db:seed:all --debug",
+    "start": "npm run seed && node ./app.js",
     "dev": "nodemon ./app.js"
   },
   "author": "Tarek Bargach",
   "license": "ISC",
   "dependencies": {
     "@sequelize/sqlite3": "^7.0.0-alpha.41",
+    "cors": "^2.8.5",
     "express": "^4.19.2",
     "nodemon": "^3.1.4",
     "sequelize": "^6.37.3"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.6.2"
   }
 }

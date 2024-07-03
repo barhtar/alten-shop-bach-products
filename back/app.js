@@ -1,10 +1,12 @@
 const express = require('express');
+const cors = require('cors')
 
 const sequelize = require('./db');
 const routes = require('./routes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+app.use(cors())
 
 // Sync the model with the database
 sequelize.sync().then(() => {
@@ -13,10 +15,8 @@ sequelize.sync().then(() => {
 
 app.use(express.json());
 
-// Use product routes
 app.use(routes);
 
-// Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
