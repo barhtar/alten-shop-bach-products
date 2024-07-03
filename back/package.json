@@ -5,8 +5,9 @@
   "main": "app.js",
   "scripts": {
     "seed": "npx sequelize-cli db:seed:all --debug",
-    "start": "npm run seed && node ./app.js",
-    "dev": "nodemon ./app.js"
+    "start": "node ./app.js",
+    "dev": "nodemon ./app.js",
+    "dev-seed": "npx sequelize-cli db:seed:all --debug && nodemon ./app.js"
   },
   "author": "Tarek Bargach",
   "license": "ISC",

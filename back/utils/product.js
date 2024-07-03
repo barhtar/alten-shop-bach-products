@@ -3,7 +3,7 @@ const { Product } = require('../models');
 
 const createProduct = async (req, res) => {
   try {
-    const { name, price, description } = req.body;
+    const { code, name, price, description, quantity, inventoryStatus, category, rating, image } = req.body;
     const product = await Product.create({ code, name, price, description, quantity, inventoryStatus, category, rating, image });
     res.json({ message: 'Product created successfully', product });
   } catch (error) {
@@ -37,21 +37,17 @@ const getProductById = async (req, res) => {
   }
 };
 
-const updateProductById = async (req, res) => {
+const patchProductById = async (req, res) => {
   try {
     const productId = req.params.id;
-    const { code, name, price, description, quantity, inventoryStatus, category, rating, image} = req.body;
-    const product = await Product.findByPk(productId);
+    const attributesToPatch = req.body;
+    const result = await Product.update(attributesToPatch, {where: {id : productId}});
 
-    if (!product) {
-      res.status(404).send('Product not found');
+    if (result[0] === 1) {
+      res.json({ message: 'Product updated successfully'});
+
     } else {
-      /*product.name = name;
-      product.price = price;
-      product.description = description;*/
-      product = { code, name, price, description, quantity, inventoryStatus, category, rating, image }
-      await product.save();
-      res.json({ message: 'Product updated successfully', product });
+      res.status(404).send('Product not found');
     }
   } catch (error) {
     console.error(error);
@@ -67,7 +63,8 @@ const deleteProductById = async (req, res) => {
       res.status(404).send('Product not found');
     } else {
       await product.destroy();
-      res.send('Product deleted successfully');
+      res.json({ message: 'Product deleted successfully'});
+
     }
   } catch (error) {
     console.error(error);
@@ -76,4 +73,4 @@ const deleteProductById = async (req, res) => {
 };
 
 
-module.exports = { createProduct, getAllProducts, getProductById, updateProductById, deleteProductById};
+module.exports = { createProduct, getAllProducts, getProductById, patchProductById, deleteProductById};

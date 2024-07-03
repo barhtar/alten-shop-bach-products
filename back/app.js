@@ -5,7 +5,7 @@ const sequelize = require('./db');
 const routes = require('./routes');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 app.use(cors())
 
 // Sync the model with the database

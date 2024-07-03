@@ -1,0 +1,409 @@
+{
+	"info": {
+		"_postman_id": "3e17b1ac-6d9c-4e92-a3d6-1ae6b9ecc05f",
+		"name": "test_alten",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1861401"
+	},
+	"item": [
+		{
+			"name": "get products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"  pm.collectionVariables.set('NumberProducts', data.length);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get products by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"content of product with id 1\", () => {\r",
+							"    pm.expect(data).to.deep.equal({\r",
+							"    \"id\": 1,\r",
+							"    \"code\": \"f230fh0g3\",\r",
+							"    \"name\": \"Bamboo Watch\",\r",
+							"    \"description\": \"Product Description\",\r",
+							"    \"price\": 65,\r",
+							"    \"quantity\": 24,\r",
+							"    \"inventoryStatus\": \"INSTOCK\",\r",
+							"    \"category\": \"Accessories\",\r",
+							"    \"rating\": 5,\r",
+							"    \"image\": \"bamboo-watch.jpg\",\r",
+							"    \"createdAt\": null,\r",
+							"    \"updatedAt\": null\r",
+							"})\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/products/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"products",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Add new product\", () => {\r",
+							"        pm.expect(data.message).to.equal(\"Product created successfully\");\r",
+							"        pm.expect(data.product.code).to.equal(\"newnew1991\");\r",
+							"        pm.expect(data.product.name).to.equal(\"test Tarek\");\r",
+							"        pm.expect(data.product.price).to.equal(72);\r",
+							"        pm.expect(data.product.description).to.equal(\"Product Description test\");\r",
+							"        pm.collectionVariables.set('idToDelete', data.product.id);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\t\t\"code\": \"newnew1991\",\r\n\t\t\t\"name\": \"test Tarek\",\r\n\t\t\t\"description\": \"Product Description test\",\r\n\t\t\t\"image\": \"black-watch-test.jpg\",\r\n\t\t\t\"price\": 72,\r\n\t\t\t\"category\": \"Accessories\",\r\n\t\t\t\"quantity\": 61,\r\n\t\t\t\"inventoryStatus\": \"INSTOCK\",\r\n\t\t\t\"rating\": 9\r\n\t\t}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "patch product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"  pm.expect(data.message).to.equal(\"Product updated successfully\");\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\t\t\"name\": \"test Tarek updated\",\r\n\t\t\t\"description\": \"Product Description test updated\",\r\n\t\t\t\"image\": \"black-watch-test-updated.jpg\"\r\n\t\t}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/products/{{idToDelete}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"products",
+						"{{idToDelete}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get product after patch",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get product after patch\", () => {\r",
+							"        pm.expect(data.description).to.equal(\"Product Description test updated\");\r",
+							"        pm.expect(data.name).to.equal(\"test Tarek updated\");\r",
+							"        pm.expect(data.image).to.equal(\"black-watch-test-updated.jpg\");\r",
+							"        pm.expect(data.code).to.equal(\"newnew1991\");\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/products/{{idToDelete}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"products",
+						"{{idToDelete}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"  pm.expect(data.message).to.equal(\"Product deleted successfully\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/products/{{idToDelete}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"products",
+						"{{idToDelete}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"  pm.expect(data.length).to.equal(pm.collectionVariables.get('NumberProducts'));\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete unfound product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Status code is 404\", function () {\r",
+							"  pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/products/11111111111",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"products",
+						"11111111111"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "NumbreProducts",
+			"value": ""
+		},
+		{
+			"key": "idToDelete",
+			"value": ""
+		},
+		{
+			"key": "NumberProducts",
+			"value": ""
+		}
+	]
+}
