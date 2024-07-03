@@ -1,0 +1,18 @@
+{
+  "name": "back",
+  "version": "1.0.0",
+  "description": "The backend for alten shop",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ./app.js",
+    "dev": "nodemon ./app.js"
+  },
+  "author": "Tarek Bargach",
+  "license": "ISC",
+  "dependencies": {
+    "@sequelize/sqlite3": "^7.0.0-alpha.41",
+    "express": "^4.19.2",
+    "nodemon": "^3.1.4",
+    "sequelize": "^6.37.3"
+  }
+}
