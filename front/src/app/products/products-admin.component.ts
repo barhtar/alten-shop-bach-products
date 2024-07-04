@@ -37,7 +37,7 @@ export class ProductsAdminComponent extends BaseTableLoader implements OnInit {
   }
 
   public onDeleteProduct(ids: number[]): void {
-    this.delete(ids[0]);
+    ids[0] && this.delete(ids[0]);
   }
 
   public onSave(product: Product): void {
@@ -45,14 +45,24 @@ export class ProductsAdminComponent extends BaseTableLoader implements OnInit {
   }
 
   private create(product: Product): void {
-    this.handleReload(this.productsService.create(product));
+    this.productsService.create(product).subscribe({
+      error: (err) => console.log('Error:', err), 
+      next: () => this.ngOnInit(),
+    }); 
   }
 
   private update(product: Product): void {
-    this.handleReload(this.productsService.update(product));
+    this.productsService.update(product).subscribe({
+      error: (err) => console.log('Error:', err), 
+      next: () => this.ngOnInit(),
+    }); 
   }
 
   private delete(id: number): void {
-    this.handleReload(this.productsService.delete(id));
+
+    this.productsService.delete(id).subscribe({
+      error: (err) => console.log('Error:', err), 
+      next: () => this.ngOnInit(),
+    }); 
   }
 }
