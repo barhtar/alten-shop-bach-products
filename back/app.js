@@ -3,10 +3,12 @@ const cors = require('cors')
 
 const sequelize = require('./db');
 const routes = require('./routes');
+require('dotenv').config()
 
 const app = express();
-const PORT = 3000;
-app.use(cors())
+const PORT = process.env.PORT;
+
+app.use(cors());
 
 // Sync the model with the database
 sequelize.sync().then(() => {
